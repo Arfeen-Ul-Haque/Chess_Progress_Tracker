@@ -9,6 +9,7 @@
 </head>
 <body>
 
+    <!-- Auth Section -->
     <div id="auth-container" class="container">
         <h1 class="logo">Chess<span>Track</span></h1>
         <div id="login-form">
@@ -27,13 +28,15 @@
         </div>
     </div>
 
+    <!-- Main Dashboard -->
     <div id="dashboard" class="container hidden">
         <nav>
-            <h2>Hello, <span id="display-name"></span></h2>
+            <h2>Hello, <span id="display-name"></span> 👋</h2>
             <button class="btn-alt" onclick="auth.logout()">Logout</button>
         </nav>
 
         <div class="grid">
+            <!-- Stats Input -->
             <section class="card">
                 <h3>Update Monthly Rating</h3>
                 <input type="number" id="rating-val" placeholder="Rating (e.g. 1500)">
@@ -42,17 +45,27 @@
                     <option value="Rapid">Rapid</option>
                     <option value="Blitz">Blitz</option>
                 </select>
-                <button onclick="stats.addRating()">Update</button>
+                <button onclick="stats.addRating()">Update Tracker</button>
             </section>
 
+            <!-- Graph Section -->
             <section class="card wide">
-                <h3>Progress Graph</h3>
-                <canvas id="ratingChart"></canvas>
+                <div class="card-header">
+                    <h3>Progress Graph</h3>
+                    <div class="filter-buttons">
+                        <button class="btn-sm" onclick="stats.renderChart('Classical')">Classical</button>
+                        <button class="btn-sm" onclick="stats.renderChart('Rapid')">Rapid</button>
+                        <button class="btn-sm" onclick="stats.renderChart('Blitz')">Blitz</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ratingChart"></canvas>
+                </div>
             </section>
 
+            <!-- FIDE calculators -->
             <section class="card">
-                <h3>FIDE Change Calc (Post-March 2024)</h3>
-                <p><small>K-Factor: 40 (Jr/New), 20 (Avg), 10 (Pro)</small></p>
+                <h3>FIDE Rating Change</h3>
                 <input type="number" id="my-rating" placeholder="Your Rating">
                 <input type="number" id="opp-rating" placeholder="Opponent Rating">
                 <select id="match-res">
@@ -60,8 +73,57 @@
                     <option value="0.5">Draw (0.5)</option>
                     <option value="0">Loss (0.0)</option>
                 </select>
-                <button onclick="calcs.change()">Calculate</button>
-                <div id="calc-result"></div>
+                <button onclick="calcs.change()">Calculate Change</button>
+                <div id="calc-result" class="res-box"></div>
+            </section>
+
+            <section class="card">
+                <h3>FIDE Initial Rating Calc</h3>
+                <p><small>Based on a minimum 5-game performance</small></p>
+                <input type="number" id="avg-opp-rating" placeholder="Avg Opponent Rating">
+                <input type="number" id="total-points" step="0.5" placeholder="Total Points Scored">
+                <input type="number" id="total-games" placeholder="Total Games Played">
+                <button onclick="calcs.initialRating()">Calculate Initial</button>
+                <div id="initial-result" class="res-box"></div>
+            </section>
+
+            <!-- Match Logger -->
+            <section class="card">
+                <h3>Log Tournament Game</h3>
+                <input type="text" id="log-tournament" placeholder="Tournament Name">
+                <input type="text" id="log-opponent" placeholder="Opponent Name">
+                <input type="number" id="log-opp-rating" placeholder="Opponent Rating">
+                <select id="log-color">
+                    <option value="White">White</option>
+                    <option value="Black">Black</option>
+                </select>
+                <select id="log-result">
+                    <option value="1-0">Win (1-0)</option>
+                    <option value="1/2-1/2">Draw (½-½)</option>
+                    <option value="0-1">Loss (0-1)</option>
+                </select>
+                <button onclick="matches.addMatch()">Log Match</button>
+            </section>
+
+            <!-- Match History List -->
+            <section class="card wide">
+                <h3>Tournament Match History</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tournament</th>
+                                <th>Opponent</th>
+                                <th>Opp Rating</th>
+                                <th>Color</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="match-history-rows">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
     </div>
