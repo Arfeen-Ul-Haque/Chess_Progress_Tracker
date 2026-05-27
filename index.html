@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChessTrack | Your Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="auth-container" class="container">
+        <h1 class="logo">Chess<span>Track</span></h1>
+        <div id="login-form">
+            <h2>Welcome Back</h2>
+            <input type="text" id="user-input" placeholder="Username">
+            <input type="password" id="pass-input" placeholder="Password">
+            <button onclick="auth.login()">Login</button>
+            <p>New here? <span onclick="auth.toggle()">Sign Up</span></p>
+        </div>
+        <div id="signup-form" class="hidden">
+            <h2>Create Account</h2>
+            <input type="text" id="new-user" placeholder="Choose Username">
+            <input type="password" id="new-pass" placeholder="Password">
+            <button onclick="auth.signup()">Register</button>
+            <p>Already have an account? <span onclick="auth.toggle()">Login</span></p>
+        </div>
+    </div>
+
+    <div id="dashboard" class="container hidden">
+        <nav>
+            <h2>Hello, <span id="display-name"></span></h2>
+            <button class="btn-alt" onclick="auth.logout()">Logout</button>
+        </nav>
+
+        <div class="grid">
+            <section class="card">
+                <h3>Update Monthly Rating</h3>
+                <input type="number" id="rating-val" placeholder="Rating (e.g. 1500)">
+                <select id="rating-type">
+                    <option value="Classical">Classical</option>
+                    <option value="Rapid">Rapid</option>
+                    <option value="Blitz">Blitz</option>
+                </select>
+                <button onclick="stats.addRating()">Update</button>
+            </section>
+
+            <section class="card wide">
+                <h3>Progress Graph</h3>
+                <canvas id="ratingChart"></canvas>
+            </section>
+
+            <section class="card">
+                <h3>FIDE Change Calc (Post-March 2024)</h3>
+                <p><small>K-Factor: 40 (Jr/New), 20 (Avg), 10 (Pro)</small></p>
+                <input type="number" id="my-rating" placeholder="Your Rating">
+                <input type="number" id="opp-rating" placeholder="Opponent Rating">
+                <select id="match-res">
+                    <option value="1">Win (1.0)</option>
+                    <option value="0.5">Draw (0.5)</option>
+                    <option value="0">Loss (0.0)</option>
+                </select>
+                <button onclick="calcs.change()">Calculate</button>
+                <div id="calc-result"></div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
