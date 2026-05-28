@@ -97,29 +97,38 @@ const stats = {
 // 3. Official FIDE March 2024 Calculators
 const calcs = {
     change: () => {
-        const myR = parseFloat(document.getElementById('my-rating').value);
-        const oppR = parseFloat(document.getElementById('opp-rating').value);
-        const res = parseFloat(document.getElementById('match-res').value);
-        
-        if (isNaN(myR) || isNaN(oppR)) return alert("Input both rating variables.");
+    const myR = parseFloat(document.getElementById('my-rating').value);
+    const oppR = parseFloat(document.getElementById('opp-rating').value);
+    const res = parseFloat(document.getElementById('match-res').value); // 1, 0.5, or 0
+    
+    if (isNaN(myR) || isNaN(oppR)) return alert("Input both ratings!");
 
-        // Official FIDE March 2024 Regulation Update: The 400-Point Rule rule limits maximum difference
-        let diff = oppR - myR;
-        if (diff > 400) diff = 400;
-        if (diff < -400) diff = -400;
+    // 1. Calculate the actual difference
+    let diff = oppR - myR;
 
-        // Mathematical Win Expectancy Formula (E)
-        const E = 1 / (1 + Math.pow(10, (diff * -1) / 400));
-        
-        // Using average baseline development coefficient (K = 20)
-        const ratingChange = 20 * (res - E);
-        const newRating = myR + ratingChange;
+    // 2. FIDE 400-Point Rule (March 2024): 
+    // A difference of more than 400 points shall be counted as if it were 400 points.
+    if (diff > 400) diff = 400;
+    if (diff < -400) diff = -400;
 
-        document.getElementById('calc-result').innerHTML = `
-            <strong>Expectancy Score (E):</strong> ${E.toFixed(3)}<br>
-            <strong>Rating Delta:</strong> ${ratingChange >= 0 ? '+' : ''}${ratingChange.toFixed(1)}<br>
-            <strong>New Rating Estimate:</strong> ${Math.round(newRating)}
-        `;
+    // 3. Winning Expectancy (E) Formula
+    // This is the standard FIDE formula: E = 1 / (1 + 10^(diff_of_ratings / 400))
+    // Note: Use (myR - oppR) or -(oppR - myR)
+    const E = 1 / (1 + Math.pow(10, (myR - oppR) / 400));
+    
+    // 4. Calculate Change (K=40 for new players, K=20 for established)
+    // Let's use K=40 as the default since you're tracking a "journey"
+    const K = 40; 
+    const ratingChange = K * (res - E);
+    const newRating = myR + ratingChange;
+
+    document.getElementById('calc-result').innerHTML = `
+        <strong>Expected Score (E):</strong> ${E.toFixed(3)}<br>
+        <strong>Rating Change:</strong> <span style="color: ${ratingChange >= 0 ? '#22c55e' : '#ef4444'}">
+            ${ratingChange >= 0 ? '+' : ''}${ratingChange.toFixed(1)}
+        </span><br>
+        <strong>New Rating:</strong> ${Math.round(newRating)}
+    `;
     },
     initialRating: () => {
         const avgOpp = parseFloat(document.getElementById('avg-opp-rating').value);
