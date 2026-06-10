@@ -4,6 +4,6 @@ This version of Chess_Progress_Tracker helps you track your progress in chess by
 <br>
 This version also includes a rating change and initial rating caclculator for you to approximately gauge the change in your rating.
 <br><br>
-# Disclaimer 
+<h1># Disclaimer</h1> <br> 
 This website is solely ment for tracking your rating. 
 The programmer assumes no responsibility for any damage, misuse or any harm cause by the direct or indirect use of the product.
