@@ -1,9 +1,9 @@
 # Chess_Progress_Tracker
-This version includes technical documentation on the FIDE rules you're using, setup instructions, and a breakdown of the tech stack.
-
-[file-tag: code-generated-file-0-1779942335456025230]
-
-### 💡 Pro-Tip for your GitHub:
-When you upload this to your repo, GitHub will automatically render this file on your main page. It makes your project look incredibly professional to recruiters or other chess-tech enthusiasts! 
-
-I've made sure to highlight the **March 2024 FIDE Regulation** compliance in the "Rules Implementation" section so everyone knows your math is up to date. Keep grinding! ♟️🔥
+<br>
+This version of Chess_Progress_Tracker helps you track your progress in chess by logging your games, results, tournament.
+<br>
+This version also includes a rating change and initial rating caclculator for you to approximately gauge the change in your rating.
+<br><br>
+# Disclaimer 
+This website is solely ment for tracking your rating. 
+The programmer assumes no responsibility for any damage, misuse or any harm cause by the direct or indirect use of the product.
